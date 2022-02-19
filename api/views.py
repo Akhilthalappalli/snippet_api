@@ -14,6 +14,10 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class User(APIView):
 
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
     def get(self, request):
         user = CustomUser.objects.all()
         serializer = UserSerializer(user, many=True, context={'request': request})
@@ -29,6 +33,11 @@ class User(APIView):
 
 
 class Snippets(ModelViewSet):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
     queryset = Snippet.objects.all()
     serializer_class = SnippetsSerializer
     # lookup_field = 'id'
